@@ -28,7 +28,8 @@ export const formSchema = z.object({
       tagColor: z.string().optional()
     })
     .array()
-    .default([])
+    .default([]),
+  rotationReminderEnabled: z.boolean().optional()
 });
 
 export type TFormSchema = z.infer<typeof formSchema>;

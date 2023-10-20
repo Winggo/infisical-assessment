@@ -140,7 +140,8 @@ export const useUpdateSecretV3 = ({
       tags,
       secretComment,
       newSecretName,
-      skipMultilineEncoding
+      skipMultilineEncoding,
+      rotationReminderEnabled
     }) => {
       const PRIVATE_KEY = localStorage.getItem("PRIVATE_KEY") as string;
 
@@ -162,7 +163,8 @@ export const useUpdateSecretV3 = ({
         ...encryptSecret(randomBytes, newSecretName ?? secretName, secretValue, secretComment),
         tags,
         skipMultilineEncoding,
-        secretName: newSecretName
+        secretName: newSecretName,
+        rotationReminderEnabled
       };
       const { data } = await apiRequest.patch(`/api/v3/secrets/${secretName}`, reqBody);
       return data;

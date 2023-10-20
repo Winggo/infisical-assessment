@@ -72,7 +72,8 @@ export const decryptSecrets = (
       createdAt: encSecret.createdAt,
       updatedAt: encSecret.updatedAt,
       version: encSecret.version,
-      skipMultilineEncoding: encSecret.skipMultilineEncoding
+      skipMultilineEncoding: encSecret.skipMultilineEncoding,
+      rotationReminderEnabled: encSecret.rotationReminderEnabled
     };
 
     if (encSecret.type === "personal") {

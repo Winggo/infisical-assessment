@@ -125,7 +125,8 @@ export const SecretListView = ({
       tags,
       skipMultilineEncoding,
       newKey,
-      secretId
+      secretId,
+      rotationReminderEnabled
     }: Partial<{
       value: string;
       comment: string;
@@ -133,6 +134,7 @@ export const SecretListView = ({
       skipMultilineEncoding: boolean;
       newKey: string;
       secretId: string;
+      rotationReminderEnabled: boolean;
     }> = {}
   ) => {
     if (operation === "delete") {
@@ -160,7 +162,8 @@ export const SecretListView = ({
         tags,
         secretComment: comment,
         skipMultilineEncoding,
-        newSecretName: newKey
+        newSecretName: newKey,
+        rotationReminderEnabled
       });
       return;
     }
@@ -195,7 +198,7 @@ export const SecretListView = ({
       const oldTagIds = orgSecret.tags.map(({ _id }) => _id);
       const isSameTags = JSON.stringify(tagIds) === JSON.stringify(oldTagIds);
       const isSharedSecUnchanged =
-        (["key", "value", "comment", "skipMultilineEncoding"] as const).every(
+        (["key", "value", "comment", "skipMultilineEncoding", "rotationReminderEnabled"] as const).every(
           (el) => orgSecret[el] === modSecret[el]
         ) && isSameTags;
 
@@ -224,7 +227,8 @@ export const SecretListView = ({
             comment,
             secretId: orgSecret._id,
             newKey: hasKeyChanged ? key : undefined,
-            skipMultilineEncoding: modSecret.skipMultilineEncoding
+            skipMultilineEncoding: modSecret.skipMultilineEncoding,
+            rotationReminderEnabled: modSecret.rotationReminderEnabled
           });
           if (cb) cb();
         }

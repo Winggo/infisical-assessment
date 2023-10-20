@@ -24,6 +24,7 @@ export interface ISecretVersion {
   secretValueIV: string;
   secretValueTag: string;
   skipMultilineEncoding?: boolean;
+  rotationReminderEnabled?: boolean;
   algorithm: "aes-256-gcm";
   keyEncoding: "utf8" | "base64";
   createdAt: string;
@@ -98,6 +99,10 @@ const secretVersionSchema = new Schema<ISecretVersion>(
       required: true
     },
     skipMultilineEncoding: {
+      type: Boolean,
+      required: false
+    },
+    rotationReminderEnabled: {
       type: Boolean,
       required: false
     },

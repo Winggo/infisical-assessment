@@ -143,6 +143,15 @@ export const SecretDetailSidebar = ({
     }
   };
 
+  const rotationReminderEnabled = watch("rotationReminderEnabled");
+  const handleEnableRotationReminder = (isEnabled: boolean) => {
+    if (isEnabled) {
+      setValue("rotationReminderEnabled", true, { shouldDirty: true })
+    } else {
+      setValue("rotationReminderEnabled", false, { shouldDirty: true })
+    }
+  };
+
   const handleFormSubmit = async (data: TFormSchema) => {
     await onSaveSecret(secret, { ...secret, ...data }, () => reset());
   };
@@ -321,7 +330,7 @@ export const SecretDetailSidebar = ({
                 rows={5}
               />
             </FormControl>
-            <div className="my-2 mb-6 border-b border-mineshaft-600 pb-4">
+            <div className="mb-4">
               <Controller
                 control={control}
                 name="skipMultilineEncoding"
@@ -351,6 +360,41 @@ export const SecretDetailSidebar = ({
                   </ProjectPermissionCan>
                 )}
               />
+            </div>
+            <div className="mb-2 border-b border-mineshaft-600 pb-4">
+              <ProjectPermissionCan
+                I={ProjectPermissionActions.Edit}
+                a={subject(ProjectPermissionSub.Secrets, { environment, secretPath })}
+              >
+                {(isAllowed) => (
+                  <>
+                    <Switch
+                      isDisabled={!isAllowed}
+                      id="enable-rotation-reminder"
+                      onCheckedChange={handleEnableRotationReminder}
+                      isChecked={rotationReminderEnabled}
+                    >
+                      Set secret rotation reminder
+                    </Switch>
+                    {/* TODO: add number input for numDays interval */}
+                    {/* {rotationReminderEnabled && (
+                      <Controller
+                        name="rotationReminder"
+                        control={control}
+                        render={({ field }) => (
+                          // <FormControl label="Reminder interval">
+                          //   <SecretInput
+                          //     isReadOnly={isReadOnly}
+                          //     containerClassName="text-bunker-300 hover:border-primary-400/50 border border-mineshaft-600 bg-bunker-800  px-2 py-1.5"
+                          //     {...field}
+                          //   />
+                          // </FormControl>
+                        )}
+                      />
+                    )} */}
+                  </>
+                )}
+              </ProjectPermissionCan>
             </div>
             <div className="dark mb-4 text-sm text-bunker-300 flex-grow">
               <div className="mb-2">Version History</div>

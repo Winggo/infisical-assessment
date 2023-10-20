@@ -28,6 +28,7 @@ export interface ISecret {
   secretCommentTag?: string;
   secretCommentHash?: string;
   skipMultilineEncoding?: boolean;
+  rotationReminderEnabled?: boolean;
   algorithm: "aes-256-gcm";
   keyEncoding: "utf8" | "base64";
   tags?: string[];
@@ -119,6 +120,10 @@ const secretSchema = new Schema<ISecret>(
       required: false
     },
     skipMultilineEncoding: {
+      type: Boolean,
+      required: false
+    },
+    rotationReminderEnabled: {
       type: Boolean,
       required: false
     },
