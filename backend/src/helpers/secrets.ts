@@ -808,7 +808,7 @@ export const updateSecretHelper = async ({
   secretCommentTag,
   skipMultilineEncoding,
   rotationReminderEnabled,
-  rotationReminderInterval
+  reminderIntervalInDays
 }: UpdateSecretParams) => {
   // get secret blind index salt
   const salt = await getSecretBlindIndexSaltHelper({
@@ -870,7 +870,7 @@ export const updateSecretHelper = async ({
         secretCommentCiphertext,
         skipMultilineEncoding,
         rotationReminderEnabled,
-        rotationReminderInterval,
+        reminderIntervalInDays,
         secretBlindIndex: newSecretNameBlindIndex,
         secretKeyIV,
         secretKeyTag,
@@ -904,7 +904,7 @@ export const updateSecretHelper = async ({
         tags,
         skipMultilineEncoding,
         rotationReminderEnabled,
-        rotationReminderInterval,
+        reminderIntervalInDays,
         secretBlindIndex: newSecretNameBlindIndex,
         $inc: { version: 1 }
       },
@@ -935,7 +935,7 @@ export const updateSecretHelper = async ({
     secretValueTag,
     skipMultilineEncoding,
     rotationReminderEnabled,
-    rotationReminderInterval,
+    reminderIntervalInDays,
     algorithm: ALGORITHM_AES_256_GCM,
     keyEncoding: ENCODING_SCHEME_UTF8
   });

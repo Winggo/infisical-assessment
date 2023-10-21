@@ -149,7 +149,7 @@ export const SecretDetailSidebar = ({
       setValue("rotationReminderEnabled", true, { shouldDirty: true })
     } else {
       setValue("rotationReminderEnabled", false, { shouldDirty: true })
-      setValue("rotationReminderInterval", undefined)
+      setValue("reminderIntervalInDays", undefined)
     }
   };
 
@@ -387,7 +387,7 @@ export const SecretDetailSidebar = ({
                           step="1"
                           defaultValue={30}
                           isDisabled={!isAllowed}
-                          {...register("rotationReminderInterval", {
+                          {...register("reminderIntervalInDays", {
                             valueAsNumber: true
                           })}
                         />

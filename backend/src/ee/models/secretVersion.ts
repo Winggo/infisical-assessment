@@ -25,7 +25,7 @@ export interface ISecretVersion {
   secretValueTag: string;
   skipMultilineEncoding?: boolean;
   rotationReminderEnabled?: boolean;
-  rotationReminderInterval?: number;
+  reminderIntervalInDays?: number;
   algorithm: "aes-256-gcm";
   keyEncoding: "utf8" | "base64";
   createdAt: string;
@@ -107,7 +107,7 @@ const secretVersionSchema = new Schema<ISecretVersion>(
       type: Boolean,
       required: false
     },
-    rotationReminderInterval: {
+    reminderIntervalInDays: {
       type: Number,
       required: false
     },

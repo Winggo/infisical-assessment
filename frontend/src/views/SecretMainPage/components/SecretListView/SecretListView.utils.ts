@@ -30,7 +30,7 @@ export const formSchema = z.object({
     .array()
     .default([]),
   rotationReminderEnabled: z.boolean().optional(),
-  rotationReminderInterval: z.number().optional()
+  reminderIntervalInDays: z.number().optional()
 });
 
 export type TFormSchema = z.infer<typeof formSchema>;

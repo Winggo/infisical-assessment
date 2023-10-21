@@ -29,7 +29,7 @@ export interface ISecret {
   secretCommentHash?: string;
   skipMultilineEncoding?: boolean;
   rotationReminderEnabled?: boolean;
-  rotationReminderInterval?: number;
+  reminderIntervalInDays?: number;
   algorithm: "aes-256-gcm";
   keyEncoding: "utf8" | "base64";
   tags?: string[];
@@ -128,7 +128,7 @@ const secretSchema = new Schema<ISecret>(
       type: Boolean,
       required: false
     },
-    rotationReminderInterval: {
+    reminderIntervalInDays: {
       type: Number,
       required: false
     },
