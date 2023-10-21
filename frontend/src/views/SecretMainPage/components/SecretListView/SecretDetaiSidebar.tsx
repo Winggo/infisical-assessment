@@ -149,6 +149,7 @@ export const SecretDetailSidebar = ({
       setValue("rotationReminderEnabled", true, { shouldDirty: true })
     } else {
       setValue("rotationReminderEnabled", false, { shouldDirty: true })
+      setValue("rotationReminderInterval", undefined)
     }
   };
 
@@ -376,22 +377,22 @@ export const SecretDetailSidebar = ({
                     >
                       Set secret rotation reminder
                     </Switch>
-                    {/* TODO: add number input for numDays interval */}
-                    {/* {rotationReminderEnabled && (
-                      <Controller
-                        name="rotationReminder"
-                        control={control}
-                        render={({ field }) => (
-                          // <FormControl label="Reminder interval">
-                          //   <SecretInput
-                          //     isReadOnly={isReadOnly}
-                          //     containerClassName="text-bunker-300 hover:border-primary-400/50 border border-mineshaft-600 bg-bunker-800  px-2 py-1.5"
-                          //     {...field}
-                          //   />
-                          // </FormControl>
-                        )}
-                      />
-                    )} */}
+                    {rotationReminderEnabled && (
+                      <FormControl label="Rotation reminder interval in days" className="mt-4 mb-0">
+                        <Input
+                          type="number"
+                          pattern="[0-9]*"
+                          min="1"
+                          max="10000"
+                          step="1"
+                          defaultValue={30}
+                          isDisabled={!isAllowed}
+                          {...register("rotationReminderInterval", {
+                            valueAsNumber: true
+                          })}
+                        />
+                      </FormControl>
+                    )}
                   </>
                 )}
               </ProjectPermissionCan>

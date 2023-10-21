@@ -141,7 +141,8 @@ export const useUpdateSecretV3 = ({
       secretComment,
       newSecretName,
       skipMultilineEncoding,
-      rotationReminderEnabled
+      rotationReminderEnabled,
+      rotationReminderInterval
     }) => {
       const PRIVATE_KEY = localStorage.getItem("PRIVATE_KEY") as string;
 
@@ -164,7 +165,8 @@ export const useUpdateSecretV3 = ({
         tags,
         skipMultilineEncoding,
         secretName: newSecretName,
-        rotationReminderEnabled
+        rotationReminderEnabled,
+        rotationReminderInterval
       };
       const { data } = await apiRequest.patch(`/api/v3/secrets/${secretName}`, reqBody);
       return data;

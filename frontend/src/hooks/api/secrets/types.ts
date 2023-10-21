@@ -18,6 +18,7 @@ export type EncryptedSecret = {
   updatedAt: string;
   skipMultilineEncoding?: boolean;
   rotationReminderEnabled?: boolean;
+  rotationReminderInterval?: number;
   secretCommentCiphertext: string;
   secretCommentIV: string;
   secretCommentTag: string;
@@ -40,6 +41,7 @@ export type DecryptedSecret = {
   folderId?: string;
   skipMultilineEncoding?: boolean;
   rotationReminderEnabled?: boolean;
+  rotationReminderInterval?: number;
 };
 
 export type EncryptedSecretVersion = {
@@ -60,6 +62,7 @@ export type EncryptedSecretVersion = {
   __v: number;
   skipMultilineEncoding?: boolean;
   rotationReminderEnabled?: boolean;
+  rotationReminderInterval?: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -117,6 +120,7 @@ export type TUpdateSecretsV3DTO = {
   secretComment?: string;
   tags?: string[];
   rotationReminderEnabled?: boolean;
+  rotationReminderInterval?: number;
 };
 
 export type TDeleteSecretsV3DTO = {

@@ -61,6 +61,7 @@ export interface UpdateSecretParams {
   secretCommentTag?: string;
   skipMultilineEncoding?: boolean;
   rotationReminderEnabled?: boolean;
+  rotationReminderInterval?: number;
   tags?: string[];
 }
 
