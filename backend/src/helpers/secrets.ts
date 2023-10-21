@@ -1013,7 +1013,7 @@ export const updateSecretHelper = async ({
 
   if (oldSecret && oldSecret.rotationReminderEnabled !== rotationReminderEnabled && reminderIntervalInDays) {
     const repeatOpts = {
-      every: reminderIntervalInDays * 1000,
+      every: reminderIntervalInDays * 24 * 60 * 60 * 1000,
       secretId: oldSecret._id
     }
     if (rotationReminderEnabled) {
