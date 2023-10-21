@@ -17,6 +17,9 @@ export type EncryptedSecret = {
   createdAt: string;
   updatedAt: string;
   skipMultilineEncoding?: boolean;
+  rotationReminderEnabled?: boolean;
+  reminderIntervalInDays?: number;
+  reminderNotes?: string;
   secretCommentCiphertext: string;
   secretCommentIV: string;
   secretCommentTag: string;
@@ -38,6 +41,9 @@ export type DecryptedSecret = {
   overrideAction?: string;
   folderId?: string;
   skipMultilineEncoding?: boolean;
+  rotationReminderEnabled?: boolean;
+  reminderIntervalInDays?: number;
+  reminderNotes?: string;
 };
 
 export type EncryptedSecretVersion = {
@@ -57,6 +63,9 @@ export type EncryptedSecretVersion = {
   tags: WsTag[];
   __v: number;
   skipMultilineEncoding?: boolean;
+  rotationReminderEnabled?: boolean;
+  reminderIntervalInDays?: number;
+  reminderNotes?: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -113,6 +122,9 @@ export type TUpdateSecretsV3DTO = {
   secretValue: string;
   secretComment?: string;
   tags?: string[];
+  rotationReminderEnabled?: boolean;
+  reminderIntervalInDays?: number;
+  reminderNotes?: string;
 };
 
 export type TDeleteSecretsV3DTO = {

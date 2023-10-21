@@ -60,6 +60,9 @@ export interface UpdateSecretParams {
   secretCommentIV?: string;
   secretCommentTag?: string;
   skipMultilineEncoding?: boolean;
+  rotationReminderEnabled?: boolean;
+  reminderIntervalInDays?: number;
+  reminderNotes?: string;
   tags?: string[];
 }
 

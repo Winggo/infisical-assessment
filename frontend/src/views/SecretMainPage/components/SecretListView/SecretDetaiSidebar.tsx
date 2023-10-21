@@ -143,6 +143,15 @@ export const SecretDetailSidebar = ({
     }
   };
 
+  const rotationReminderEnabled = watch("rotationReminderEnabled");
+  const handleEnableRotationReminder = (isEnabled: boolean) => {
+    if (isEnabled) {
+      setValue("rotationReminderEnabled", true, { shouldDirty: true })
+    } else {
+      setValue("rotationReminderEnabled", false, { shouldDirty: true })
+    }
+  };
+
   const handleFormSubmit = async (data: TFormSchema) => {
     await onSaveSecret(secret, { ...secret, ...data }, () => reset());
   };
@@ -321,7 +330,7 @@ export const SecretDetailSidebar = ({
                 rows={5}
               />
             </FormControl>
-            <div className="my-2 mb-6 border-b border-mineshaft-600 pb-4">
+            <div className="mb-4">
               <Controller
                 control={control}
                 name="skipMultilineEncoding"
@@ -352,6 +361,52 @@ export const SecretDetailSidebar = ({
                 )}
               />
             </div>
+            <div className="mb-2 border-b border-mineshaft-600 pb-4">
+              <ProjectPermissionCan
+                I={ProjectPermissionActions.Edit}
+                a={subject(ProjectPermissionSub.Secrets, { environment, secretPath })}
+              >
+                {(isAllowed) => (
+                  <>
+                    <Switch
+                      isDisabled={!isAllowed}
+                      id="enable-rotation-reminder"
+                      onCheckedChange={handleEnableRotationReminder}
+                      isChecked={rotationReminderEnabled}
+                    >
+                      Set secret rotation reminder
+                    </Switch>
+                    {rotationReminderEnabled && (
+                      <>
+                        <FormControl label="Rotation reminder interval in days" className="mt-4 mb-0">
+                          <Input
+                            className="bg-bunker-800"
+                            type="number"
+                            pattern="[0-9]*"
+                            min="1"
+                            max="10000"
+                            step="1"
+                            defaultValue={30}
+                            isDisabled={!isAllowed}
+                            {...register("reminderIntervalInDays", {
+                              valueAsNumber: true
+                            })}
+                          />
+                        </FormControl>
+                        <FormControl label="Rotation reminder note" className="mt-4 mb-0">
+                          <TextArea
+                            className="border border-mineshaft-600 text-sm"
+                            {...register("reminderNotes")}
+                            readOnly={isReadOnly}
+                            rows={2}
+                          />
+                        </FormControl>
+                      </>
+                    )}
+                  </>
+                )}
+              </ProjectPermissionCan>
+            </div>
             <div className="dark mb-4 text-sm text-bunker-300 flex-grow">
               <div className="mb-2">Version History</div>
               <div className="flex h-48 flex-col space-y-2 overflow-y-auto overflow-x-hidden rounded-md border border-mineshaft-600 bg-bunker-800 p-2 dark:[color-scheme:dark]">
@@ -371,7 +426,7 @@ export const SecretDetailSidebar = ({
                 ))}
               </div>
             </div>
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-4 pb-4">
               <div className="flex space-x-4 items-center">
                 <ProjectPermissionCan
                   I={ProjectPermissionActions.Edit}

@@ -35,6 +35,9 @@ export interface ISecretApprovalSecChange {
   secretCommentTag?: string;
   secretCommentCiphertext?: string;
   skipMultilineEncoding?: boolean;
+  rotationReminderEnabled?: boolean;
+  reminderIntervalInDays?: number;
+  reminderNotes?: string;
   algorithm?: "aes-256-gcm";
   keyEncoding?: "utf8" | "base64";
   tags?: string[];
@@ -114,6 +117,18 @@ const secretApprovalSecretChangeSchema = new Schema<ISecretApprovalSecChange>({
   },
   skipMultilineEncoding: {
     type: Boolean,
+    required: false
+  },
+  rotationReminderEnabled: {
+    type: Boolean,
+    required: false
+  },
+  reminderIntervalInDays: {
+    type: Number,
+    required: false
+  },
+  reminderNotes: {
+    type: String,
     required: false
   },
   algorithm: {

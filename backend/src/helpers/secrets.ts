@@ -54,6 +54,7 @@ import { getFolderByPath, getFolderIdFromServiceToken } from "../services/Folder
 import picomatch from "picomatch";
 import path from "path";
 import { getAnImportedSecret } from "../services/SecretImportService";
+import { addAllProjectMembersReminder, removeAllProjectMembersReminder } from "../queues/secret-rotation-reminders/remindAllProjectMembers";
 
 /**
  * Validate scope for service token v3
@@ -806,7 +807,10 @@ export const updateSecretHelper = async ({
   secretCommentCiphertext,
   secretCommentIV,
   secretCommentTag,
-  skipMultilineEncoding
+  skipMultilineEncoding,
+  rotationReminderEnabled,
+  reminderIntervalInDays,
+  reminderNotes
 }: UpdateSecretParams) => {
   // get secret blind index salt
   const salt = await getSecretBlindIndexSaltHelper({
@@ -818,16 +822,16 @@ export const updateSecretHelper = async ({
     salt
   });
 
+  let oldSecret;
   if (secretId) {
-    const secret = await Secret.findOne({
+    oldSecret = await Secret.findOne({
       workspace: workspaceId,
       environment,
       _id: secretId
-    }).select("secretBlindIndex");
-    if (secret && secret.secretBlindIndex) oldSecretBlindIndex = secret.secretBlindIndex;
+    }).select("secretBlindIndex rotationReminderEnabled");
+    if (oldSecret && oldSecret.secretBlindIndex) oldSecretBlindIndex = oldSecret.secretBlindIndex;
   }
 
-  let secret: ISecret | null = null;
   const folderId = await getFolderIdFromServiceToken(workspaceId, environment, secretPath);
 
   let newSecretNameBlindIndex = undefined;
@@ -849,6 +853,7 @@ export const updateSecretHelper = async ({
     }
   }
 
+  let secret: ISecret | null = null;
   if (type === SECRET_SHARED) {
     // case: update shared secret
     secret = await Secret.findOneAndUpdate(
@@ -867,6 +872,9 @@ export const updateSecretHelper = async ({
         secretCommentTag,
         secretCommentCiphertext,
         skipMultilineEncoding,
+        rotationReminderEnabled,
+        reminderIntervalInDays,
+        reminderNotes,
         secretBlindIndex: newSecretNameBlindIndex,
         secretKeyIV,
         secretKeyTag,
@@ -899,6 +907,9 @@ export const updateSecretHelper = async ({
         secretKeyCiphertext,
         tags,
         skipMultilineEncoding,
+        rotationReminderEnabled,
+        reminderIntervalInDays,
+        reminderNotes,
         secretBlindIndex: newSecretNameBlindIndex,
         $inc: { version: 1 }
       },
@@ -928,6 +939,9 @@ export const updateSecretHelper = async ({
     secretValueIV,
     secretValueTag,
     skipMultilineEncoding,
+    rotationReminderEnabled,
+    reminderIntervalInDays,
+    reminderNotes,
     algorithm: ALGORITHM_AES_256_GCM,
     keyEncoding: ENCODING_SCHEME_UTF8
   });
@@ -995,6 +1009,23 @@ export const updateSecretHelper = async ({
         userAgent: authData.userAgent
       }
     });
+  }
+
+  if (oldSecret && oldSecret.rotationReminderEnabled !== rotationReminderEnabled && reminderIntervalInDays) {
+    const repeatOpts = {
+      every: reminderIntervalInDays * 24 * 60 * 60 * 1000,
+      secretId: oldSecret._id
+    }
+    if (rotationReminderEnabled) {
+      await addAllProjectMembersReminder({
+        intervalDays: reminderIntervalInDays,
+        note: reminderNotes,
+        secretId: oldSecret._id,
+        workspaceId
+      }, repeatOpts)
+    } else {
+      await removeAllProjectMembersReminder(repeatOpts)
+    }
   }
 
   return secret;
