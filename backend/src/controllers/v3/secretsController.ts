@@ -688,7 +688,8 @@ export const updateSecretByName = async (req: Request, res: Response) => {
       secretKeyCiphertext,
       skipMultilineEncoding,
       rotationReminderEnabled,
-      reminderIntervalInDays
+      reminderIntervalInDays,
+      reminderNotes
     },
     params: { secretName }
   } = await validateRequest(reqValidator.UpdateSecretByNameV3, req);
@@ -730,6 +731,7 @@ export const updateSecretByName = async (req: Request, res: Response) => {
               skipMultilineEncoding,
               rotationReminderEnabled,
               reminderIntervalInDays,
+              reminderNotes,
               secretKeyTag,
               secretKeyCiphertext,
               secretKeyIV
@@ -760,6 +762,7 @@ export const updateSecretByName = async (req: Request, res: Response) => {
     skipMultilineEncoding,
     rotationReminderEnabled,
     reminderIntervalInDays,
+    reminderNotes,
     secretKeyTag,
     secretKeyCiphertext,
     secretKeyIV

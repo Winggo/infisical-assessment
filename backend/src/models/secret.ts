@@ -30,6 +30,7 @@ export interface ISecret {
   skipMultilineEncoding?: boolean;
   rotationReminderEnabled?: boolean;
   reminderIntervalInDays?: number;
+  reminderNotes?: string;
   algorithm: "aes-256-gcm";
   keyEncoding: "utf8" | "base64";
   tags?: string[];
@@ -130,6 +131,10 @@ const secretSchema = new Schema<ISecret>(
     },
     reminderIntervalInDays: {
       type: Number,
+      required: false
+    },
+    reminderNotes: {
+      type: String,
       required: false
     },
     algorithm: {

@@ -26,6 +26,7 @@ export interface ISecretVersion {
   skipMultilineEncoding?: boolean;
   rotationReminderEnabled?: boolean;
   reminderIntervalInDays?: number;
+  reminderNotes?: string;
   algorithm: "aes-256-gcm";
   keyEncoding: "utf8" | "base64";
   createdAt: string;
@@ -109,6 +110,10 @@ const secretVersionSchema = new Schema<ISecretVersion>(
     },
     reminderIntervalInDays: {
       type: Number,
+      required: false
+    },
+    reminderNotes: {
+      type: String,
       required: false
     },
     algorithm: {

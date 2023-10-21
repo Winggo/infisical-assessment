@@ -366,6 +366,7 @@ export const UpdateSecretByNameV3 = z.object({
     skipMultilineEncoding: z.boolean().optional(),
     rotationReminderEnabled: z.boolean().optional(),
     reminderIntervalInDays: z.number().optional(),
+    reminderNotes: z.string().trim().optional(),
     // to update secret name
     secretName: z.string().trim().optional(),
     secretKeyIV: z.string().trim().optional(),

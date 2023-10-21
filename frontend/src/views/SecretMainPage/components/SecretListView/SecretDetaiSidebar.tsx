@@ -150,6 +150,7 @@ export const SecretDetailSidebar = ({
     } else {
       setValue("rotationReminderEnabled", false, { shouldDirty: true })
       setValue("reminderIntervalInDays", undefined)
+      setValue("reminderNotes", undefined)
     }
   };
 
@@ -378,20 +379,31 @@ export const SecretDetailSidebar = ({
                       Set secret rotation reminder
                     </Switch>
                     {rotationReminderEnabled && (
-                      <FormControl label="Rotation reminder interval in days" className="mt-4 mb-0">
-                        <Input
-                          type="number"
-                          pattern="[0-9]*"
-                          min="1"
-                          max="10000"
-                          step="1"
-                          defaultValue={30}
-                          isDisabled={!isAllowed}
-                          {...register("reminderIntervalInDays", {
-                            valueAsNumber: true
-                          })}
-                        />
-                      </FormControl>
+                      <>
+                        <FormControl label="Rotation reminder interval in days" className="mt-4 mb-0">
+                          <Input
+                            className="bg-bunker-800"
+                            type="number"
+                            pattern="[0-9]*"
+                            min="1"
+                            max="10000"
+                            step="1"
+                            defaultValue={30}
+                            isDisabled={!isAllowed}
+                            {...register("reminderIntervalInDays", {
+                              valueAsNumber: true
+                            })}
+                          />
+                        </FormControl>
+                        <FormControl label="Rotation reminder note" className="mt-4 mb-0">
+                          <TextArea
+                            className="border border-mineshaft-600 text-sm"
+                            {...register("reminderNotes")}
+                            readOnly={isReadOnly}
+                            rows={2}
+                          />
+                        </FormControl>
+                      </>
                     )}
                   </>
                 )}

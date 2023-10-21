@@ -62,6 +62,7 @@ export interface UpdateSecretParams {
   skipMultilineEncoding?: boolean;
   rotationReminderEnabled?: boolean;
   reminderIntervalInDays?: number;
+  reminderNotes?: string;
   tags?: string[];
 }
 

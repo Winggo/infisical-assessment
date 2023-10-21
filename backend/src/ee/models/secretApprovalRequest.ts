@@ -37,6 +37,7 @@ export interface ISecretApprovalSecChange {
   skipMultilineEncoding?: boolean;
   rotationReminderEnabled?: boolean;
   reminderIntervalInDays?: number;
+  reminderNotes?: string;
   algorithm?: "aes-256-gcm";
   keyEncoding?: "utf8" | "base64";
   tags?: string[];
@@ -124,6 +125,10 @@ const secretApprovalSecretChangeSchema = new Schema<ISecretApprovalSecChange>({
   },
   reminderIntervalInDays: {
     type: Number,
+    required: false
+  },
+  reminderNotes: {
+    type: String,
     required: false
   },
   algorithm: {

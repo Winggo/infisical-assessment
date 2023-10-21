@@ -74,7 +74,8 @@ export const decryptSecrets = (
       version: encSecret.version,
       skipMultilineEncoding: encSecret.skipMultilineEncoding,
       rotationReminderEnabled: encSecret.rotationReminderEnabled,
-      reminderIntervalInDays: encSecret.reminderIntervalInDays
+      reminderIntervalInDays: encSecret.reminderIntervalInDays,
+      reminderNotes: encSecret.reminderNotes
     };
 
     if (encSecret.type === "personal") {
