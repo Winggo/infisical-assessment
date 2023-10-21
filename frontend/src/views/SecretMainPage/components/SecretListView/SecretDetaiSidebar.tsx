@@ -149,8 +149,6 @@ export const SecretDetailSidebar = ({
       setValue("rotationReminderEnabled", true, { shouldDirty: true })
     } else {
       setValue("rotationReminderEnabled", false, { shouldDirty: true })
-      setValue("reminderIntervalInDays", undefined)
-      setValue("reminderNotes", undefined)
     }
   };
 
