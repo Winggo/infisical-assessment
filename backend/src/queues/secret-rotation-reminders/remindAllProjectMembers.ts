@@ -24,7 +24,7 @@ allProjectMembersReminders.process("reminder", async (job: Job, done: Queue.Done
 
     const userEmailObjs = await User.find({
       _id: {
-        $in: projectMembersWithUsersIds
+        $in: [...projectMembersWithUsersIds.map(memberWithUserId => memberWithUserId.user)]
       }
     }).select("email").lean();
     
